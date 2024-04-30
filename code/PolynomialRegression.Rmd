@@ -2,14 +2,12 @@
 ---
 title: "Polynomial Regression"
 output:
-  md_document:
-    variant: markdown_github
+  pdf_document:
+    toc: yes
   html_document:
-    <!-- toc: yes -->
+    toc: yes
     code_folding: show
     theme: yeti
-  pdf_document:
-    <!-- toc: yes -->
 ---
 
 ```{r setup, include=FALSE}
