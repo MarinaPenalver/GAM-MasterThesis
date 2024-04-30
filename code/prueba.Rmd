@@ -1,0 +1,28 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+This is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. When you execute code within the notebook, the results appear beneath the code. 
+
+
+Polynomial regression is a tool that allows us to understand and predict the behavior of complex data. While linear regression assumes a linear relationship between the independent variables and the dependent variable, polynomial regression allows for modeling nonlinear relationships by incorporating polynomial terms.
+
+First, we consider the univariate model of the form:
+\begin{equation}
+y_i = f(x_i) + \varepsilon_i \quad i = 1, \dotsc, n,
+\end{equation}
+
+
+According to polynomial regression, $f$ is a polynomial function with degree $q$. i.e.,
+\begin{equation*}
+f(x) = \beta_0 + \beta_1 x + \beta_2 x^2 + \dots + \beta_q x^q
+\end{equation*}
+for certain coefficients $\beta_j$ where $j=0, \dotsc, q$. Now, the model above 
+can be written as
+\begin{equation*}
+y_i = \beta_0 + \beta_1 x_i + \beta_2 x_i^2 + \dots + \beta_q x_i^q + \varepsilon_i \quad i = 1, \dotsc, n.
+\end{equation*}
+
+It is possible to estimate the coefficients $\beta$ using linear regression considering the model $y = X\beta + \varepsilon$ where the model matrix is $X = [1, x, x^2, \dotsc, x^q]$ and the coefficient vector is $\beta = [\beta_0, \beta_1, \beta_2, \dotsc \beta_q]^T$.
+
