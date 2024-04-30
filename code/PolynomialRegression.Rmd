@@ -2,6 +2,8 @@
 ---
 title: "Polynomial Regression"
 output:
+  md_document:
+    variant: markdown_github
   html_document:
     <!-- toc: yes -->
     code_folding: show
