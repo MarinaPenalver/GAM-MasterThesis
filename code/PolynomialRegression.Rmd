@@ -19,7 +19,7 @@ set.seed(2512)
 # Introduction
 
 
-Polynomial regression is a tool that allows us to understand and predict the behavior of complex data. Unlike linear regression, which assumes a linear relationship between the independent and dependent variables, polynomial regression can model nonlinear relationships by incorporating polynomial terms.
+**Polynomial regression** is a tool that allows us to understand and predict the behavior of complex data. Unlike linear regression, which assumes a linear relationship between the independent and dependent variables, polynomial regression can model nonlinear relationships by incorporating polynomial terms.
 
 
 First, we consider a univariate model:
