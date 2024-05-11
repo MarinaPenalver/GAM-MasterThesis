@@ -551,15 +551,15 @@ V_0 = \frac{1}{n} \sum_{i=1}^n (\hat{f}^{[-i]}(x_i) - y_i)^2,
 all data except <span class="math inline">\(y_i\)</span>.</p>
 <p>Substituting the relationship <span class="math inline">\(y_i =
 f(x_i) + \varepsilon_i\)</span> into the definition of <span class="math inline">\(V_0\)</span> and considering that <span class="math inline">\(\varepsilon_i\)</span> is independent of <span class="math inline">\(\hat{f}^{[-i]}\)</span> with zero mean, we have:
-<span class="math display">\[\begin{equation*}
-\operatorname{E}(V_0) = \operatorname{E}\left(\frac{1}{n} \sum_{i=1}^n
-(\hat{f}^{[-i]}(x_i) - f(x_i) - \varepsilon_i)^2\right) \\
-= \operatorname{E}\left(\frac{1}{n} \sum_{i=1}^n \left(
-(\hat{f}^{[-i]}(x_i) - f(x_i))^2 + 2\varepsilon_i(\hat{f}^{[-i]}(x_i) -
-f(x_i)) + \varepsilon_i^2 \right)\right) \\
-= \frac{1}{n} \operatorname{E}\left(\sum_{i=1}^n (\hat{f}^{[-i]}(x_i) -
-f(x_i))^2\right) + \sigma^2.
-\end{equation*}\]</span></p>
+<span class="math display">\[\operatorname{E}(V_0) =
+\operatorname{E}\left(\frac{1}{n} \sum_{i=1}^n (\hat{f}^{[-i]}(x_i) -
+f(x_i) - \varepsilon_i)^2\right)\]</span></p>
+<p><span class="math display">\[= \operatorname{E}\left(\frac{1}{n}
+\sum_{i=1}^n \left( (\hat{f}^{[-i]}(x_i) - f(x_i))^2 +
+2\varepsilon_i(\hat{f}^{[-i]}(x_i) - f(x_i)) + \varepsilon_i^2
+\right)\right) \]</span> <span class="math display">\[= \frac{1}{n}
+\operatorname{E}\left(\sum_{i=1}^n (\hat{f}^{[-i]}(x_i) -
+f(x_i))^2\right) + \sigma^2.\]</span></p>
 <p>If <span class="math inline">\(\hat{f}^{[-i]}\)</span> is assumed to
 be a good approximation of <span class="math inline">\(\hat{f}\)</span>,
 then <span class="math inline">\(\operatorname{E}(V_0)\)</span> becomes
@@ -575,8 +575,9 @@ calculated. The value of <span class="math inline">\(\lambda\)</span>
 that minimizes <span class="math inline">\(V_0\)</span> among all
 calculated is selected. However, ordinary cross-validation, which
 involves fitting the model <span class="math inline">\(n\)</span> times,
-can be computationally costly. Therefore, emerges as a computationally
-efficient alternative, effectively selecting the value of <span class="math inline">\(\lambda\)</span> that optimizes the balance
+can be computationally costly. Therefore, <strong>generalized
+cross-validation</strong> emerges as a computationally efficient
+alternative, effectively selecting the value of <span class="math inline">\(\lambda\)</span> that optimizes the balance
 between fit and smoothness.</p>
 <p><strong>Generalized cross validation</strong> is expressed by the
 formula: <span class="math display">\[\begin{equation*}
@@ -694,15 +695,15 @@ procedure has determined to be optimal:</p>
 <pre class="r"><code>smooth_spline_model$lambda</code></pre>
 <pre><code>## [1] 1.302541e-05</code></pre>
 <p>Once the model is fitted, we proceed do the predictions.</p>
-<pre class="r"><code>x_pred &lt;- seq(min(x), max(x), length.out = 300)
-y_pred &lt;- predict(smooth_spline_model, x_pred)$y
+<pre class="r"><code>x.pred &lt;- seq(min(x), max(x), length.out = 300)
+y.pred &lt;- predict(smooth_spline_model, x.pred)$y
 
-data_spline &lt;- data.frame(x_pred, y = y_pred)</code></pre>
+data_spline &lt;- data.frame(x.pred, y = y.pred)</code></pre>
 <p>We now plot the original data along with the predicted spline to
 visualize how well the spline fits the data.</p>
 <pre class="r"><code>ggplot(data_spline, aes(x = x)) +
   geom_point(aes(x = x, y = y.obs, color = &quot;Observations&quot;), shape = 20, size = 2) +
-  geom_line(aes(x = x_pred, y = y_pred, color = &quot;Prediction&quot;), linewidth = 1) +
+  geom_line(aes(x = x.pred, y = y.pred, color = &quot;Prediction&quot;), linewidth = 1) +
   scale_color_manual(values = c(&quot;Observations&quot; = &quot;steelblue&quot;, &quot;Prediction&quot; = &quot;coral&quot;)) +
   labs(title = &quot;Smoothing Splines&quot;, x = &quot;x&quot;, y = &quot;y&quot;, colour=NULL) +
   theme_light() +
@@ -720,18 +721,18 @@ controlling overfitting.</p>
 splineS2 &lt;- smooth.spline(x, y.obs, cv=T, lambda=1e-5, nknots=50)
 splineS3 &lt;- smooth.spline(x, y.obs, cv=T, lambda=1e-2, nknots=50)</code></pre>
 <p>We predict compute the predictions.</p>
-<pre class="r"><code>x_pred &lt;- seq(min(x), max(x), length.out = 300)
-y_pred1 &lt;- predict(splineS1, x_pred)$y
-y_pred2 &lt;- predict(splineS2, x_pred)$y
-y_pred3 &lt;- predict(splineS3, x_pred)$y
+<pre class="r"><code>x.pred &lt;- seq(min(x), max(x), length.out = 300)
+y.pred1 &lt;- predict(splineS1, x.pred)$y
+y.pred2 &lt;- predict(splineS2, x.pred)$y
+y.pred3 &lt;- predict(splineS3, x.pred)$y
 
 
-data_spline &lt;- data.frame(x_pred, y_pred1, y_pred2, y_pred3)</code></pre>
+data_spline &lt;- data.frame(x.pred, y.pred1, y.pred2, y.pred3)</code></pre>
 <p>Next, is shown the plot:</p>
 <pre class="r"><code>ggplot(data_spline, aes(x = x)) +
-  geom_line(aes(x = x_pred, y = y_pred1, color = &quot;1&quot;), linewidth = 1) +
-  geom_line(aes(x = x_pred, y = y_pred2, color = &quot;2&quot;), linewidth = 1) +
-  geom_line(aes(x = x_pred, y = y_pred3, color = &quot;3&quot;), linewidth = 1) +
+  geom_line(aes(x = x.pred, y = y.pred1, color = &quot;1&quot;), linewidth = 1) +
+  geom_line(aes(x = x.pred, y = y.pred2, color = &quot;2&quot;), linewidth = 1) +
+  geom_line(aes(x = x.pred, y = y.pred3, color = &quot;3&quot;), linewidth = 1) +
   geom_point(aes(x = x, y = y.obs, color = &quot;Observaciones&quot;), shape = 20, size = 2) +
   scale_color_manual(
     values = c(&quot;Observaciones&quot; = &quot;steelblue&quot;, 
