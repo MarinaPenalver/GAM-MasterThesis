@@ -6,7 +6,7 @@ output:
     toc: yes
   html_document:
     toc: yes
-    <!-- code_folding: show -->
+    code_folding: show
     theme: yeti
 ---
 
@@ -172,7 +172,7 @@ ggplot(data, aes(x = x, y = y.obs)) +
   theme(plot.title = element_text(size = 14),
         legend.position = c(0.15, 0.85),  
         legend.background = element_rect(fill = "white", colour = "black"))
-# ggsave("graphs/CubicSpline1.pdf", width = 10, height = 6, dpi = 300)
+# ggsave("../graphs/CubicSpline1.pdf", width = 10, height = 6, dpi = 300)
 ```
 
 
@@ -222,7 +222,7 @@ ggplot(data, aes(x = x, y = y.obs)) +
         legend.position = c(0.15, 0.75),  
         legend.background = element_rect(fill = "white", colour = "black"))
 
-# ggsave("graphs/CubicSpline2.pdf", width = 10, height = 6, dpi = 300)
+# ggsave("../graphs/CubicSpline2.pdf", width = 10, height = 6, dpi = 300)
 ```
 It is observed that increasing the number of knots also increases the flexibility of the adjustment. For example, in the interval $[0.5, 0.7]$ there is a curve that the models with $3$ and $5$ knots fail to capture, while the model with $20$ knots does capture it. Increasing the number of nodes also causes an increase in model complexity, so it is important to carefully manage this complexity to avoid overfitting.
 
@@ -274,7 +274,7 @@ ggplot(data.spline, aes(x = x, y = y.obs)) +
         legend.position = c(0.15, 0.75),  
         legend.background = element_rect(fill = "white", colour = "black"))
 
-# ggsave("graphs/CubicSpline3.pdf", width = 10, height = 6, dpi = 300)
+# ggsave("../graphs/CubicSpline3.pdf", width = 10, height = 6, dpi = 300)
 ```
 
 At the extremes of the interval, the linear trend of the natural spline is observed, while the cubic spline shows a more volatile behavior, exhibiting significant oscillations that may extend beyond the available data. This behavior is because cubic splines place no constraints on the derivatives at the end of the data, often resulting in unrealistic extrapolations and overfitting in these areas.

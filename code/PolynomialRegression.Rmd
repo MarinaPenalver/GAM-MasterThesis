@@ -4,7 +4,7 @@ title: "Polynomial Regression"
 output:
   html_document:
     toc: yes
-    <!-- code_folding: show -->
+    code_folding: show
     theme: yeti
   pdf_document:
     toc: yes
@@ -80,7 +80,7 @@ ggplot(data = data) +
         legend.position = c(0.15, 0.85),  
         legend.background = element_rect(fill = "white",colour = "black")) 
 
-# ggsave("graphs/PolynomialRegression.pdf", width = 10, height = 6, dpi = 300)
+# ggsave("../graphs/Data.pdf", width = 10, height = 6, dpi = 300)
 ```
 
 
@@ -116,7 +116,7 @@ ggplot(data = data.polynomial) +
         legend.position = c(0.18, 0.85),  
         legend.background = element_rect(fill = "white", colour = "gray50")) 
 
-# ggsave("graphs/PolynomialRegression1.pdf", width = 10, height = 6, dpi = 300)
+# ggsave("../graphs/PolynomialRegression1.pdf", width = 10, height = 6, dpi = 300)
 ```
 
 
@@ -171,7 +171,7 @@ ggplot(data = data_pred) +
         legend.position = c(0.15, 0.8),  
         legend.background = element_rect(fill = "white", colour = "gray50")) 
 
-# ggsave("graphs/PolynomialRegression2.pdf", width = 10, height = 6, dpi = 300)
+# ggsave("../graphs/PolynomialRegression2.pdf", width = 10, height = 6, dpi = 300)
 ```
 
 The graphs shows that ,as the degree of the polynomial increases, the curve fits more closely to fluctuations in the data. However, this also increases the risk of overfitting, so when using polynomial regression, it is crucial to correctly choose the degree of the polynomial.
