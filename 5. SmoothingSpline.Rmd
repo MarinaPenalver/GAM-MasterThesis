@@ -1,6 +1,7 @@
 
 ---
 title: "Smoothing Splines"
+author: "Marina Peñalver Ripoll"
 output:
   html_document:
     toc: yes
@@ -22,18 +23,18 @@ set.seed(2512)
 
 The formulation of a penalized spline can be expressed as the minimization of an objective function that includes both the squared error of the classic problem, as well as a penalty term, which depends on the second derivative of the spline function. Mathematically, this is represented as:
 \begin{equation}
-    ||y-X\beta||^2 + \lambda \int_0^1 (f''(x))^2dx = \sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int_0^1 (f''(x))^2dx.
+    ||y-\mathbf{X}\boldsymbol{\beta}||^2 + \lambda \int_0^1 (f''(x))^2dx = \sum_{i=1}^n (y_i - f(x_i))^2 + \lambda \int_0^1 (f''(x))^2dx.
 \end{equation}
 
 The parameter $\lambda$ is the **smoothing parameter** and the second derivative of $f$ allows modeling its curvature. For values of $\lambda$ tending to infinity, the estimation does not allow large fluctuations in the data, and $f$ could be linear. On the other hand, lower values of $\lambda$ give less weight to the penalty, resulting in more flexible models, but with a higher risk of overfitting. In the extreme case where $\lambda = 0$, the spline is unpenalized.
 
-Since $f$ is linear in the parameters $\beta_i$, it is possible to express the penalty as a quadratic form of $\beta$,
+Since $f$ is linear in the parameters $\boldsymbol{\beta}_i$, it is possible to express the penalty as a quadratic form of $\boldsymbol{\beta}$,
 \begin{equation*}
-    \int_0^1 (f''(x))^2dx = \beta^T S \beta,
+    \int_0^1 (f''(x))^2dx = \boldsymbol{\beta}^T \mathbf{S} \boldsymbol{\beta},
 \end{equation*}
 with $S$ being a symmetric matrix of dimension $(q+1)\times(q+1)$. Each element of $S$ located at position $(i, j)$ is calculated through the integral  $\int_0^1 b_i''(x) b_j''(x) dx$. Now, the minimization problem transforms into
 \begin{equation}
-    \min_\beta ||y-X\beta||^2 + \lambda \beta^T S \beta.
+    \min_{\boldsymbol{\beta}} ||y-\mathbf{X}\boldsymbol{\beta}||^2 + \lambda \boldsymbol{\beta}^T \mathbf{S} \boldsymbol{\beta}.
 \end{equation}
 
 The problem of estimating the degree of smoothness of the model is transformed into estimating the smoothing parameter $\lambda$. The goal is to find a $\lambda$ value that ensures the approximation from the regression spline is as close as possible to $f$. There are multiple ways to optimize the value of $\lambda$, the most common strategy is based on cross-validation.
@@ -43,36 +44,36 @@ Since the value of the function $f$ describing the data is unknown, it is not po
 
 **Cross validation** provides a practical method for estimating the performance of a model without needing the function $f$. Given the estimate of $f$, $\hat{f}$, the mean squared error is defined as:
 \begin{equation*}
-M = \frac{1}{n}\sum_{i=1}^n (\hat{f}(x_i) - f(x_i))^2,
+MSE = \frac{1}{n}\sum_{i=1}^n (\hat{f}(x_i) - f(x_i))^2,
 \end{equation*}
 and the mean squared error of cross-validation,
 \begin{equation*}
-V_0 = \frac{1}{n} \sum_{i=1}^n (\hat{f}^{[-i]}(x_i) - y_i)^2,
+MSE_v = \frac{1}{n} \sum_{i=1}^n (\hat{f}^{[-i]}(x_i) - y_i)^2,
 \end{equation*}
 where $\hat{f}^{[-i]}$ is the model adjusted to all data except $y_i$.
 
-Substituting the relationship $y_i = f(x_i) + \varepsilon_i$ into the definition of $V_0$ and considering that $\varepsilon_i$ is independent of $\hat{f}^{[-i]}$ with zero mean, we have:
-$$\operatorname{E}(V_0) = \operatorname{E}\left(\frac{1}{n} \sum_{i=1}^n (\hat{f}^{[-i]}(x_i) - f(x_i) - \varepsilon_i)^2\right)$$
+Substituting the relationship $y_i = f(x_i) + \varepsilon_i$ into the definition of $MSE_v$ and considering that $\varepsilon_i$ is independent of $\hat{f}^{[-i]}$ with zero mean, we have:
+$$\operatorname{E}(MSE_v) = \operatorname{E}\left(\frac{1}{n} \sum_{i=1}^n (\hat{f}^{[-i]}(x_i) - f(x_i) - \varepsilon_i)^2\right)$$
 
 $$= \operatorname{E}\left(\frac{1}{n} \sum_{i=1}^n \left( (\hat{f}^{[-i]}(x_i) - f(x_i))^2 + 2\varepsilon_i(\hat{f}^{[-i]}(x_i) - f(x_i)) + \varepsilon_i^2 \right)\right) $$
 $$= \frac{1}{n} \operatorname{E}\left(\sum_{i=1}^n (\hat{f}^{[-i]}(x_i) - f(x_i))^2\right) + \sigma^2.$$
 
-If $\hat{f}^{[-i]}$ is assumed to be a good approximation of $\hat{f}$, then $\operatorname{E}(V_0)$ becomes a reasonable approximation of $\operatorname{E}(M)+ \sigma^2$. Therefore, minimizing $V_0$ emerges as a viable approach for minimizing $M$.
+If $\hat{f}^{[-i]}$ is assumed to be a good approximation of $\hat{f}$, then $\operatorname{E}(MSE_v)$ becomes a reasonable approximation of $\operatorname{E}(MSE)+ \sigma^2$. Therefore, minimizing $MSE_v$ emerges as a viable approach for minimizing $M$.
 
 To determine the optimal value of $\lambda$ in a penalized spline model, the following procedure is carried out:
 
 A set of candidate values for $\lambda$ is determined.
-For each chosen value of $\lambda$, the mean squared error of cross-validation, $V_0$, is calculated.
-The value of $\lambda$ that minimizes $V_0$ among all calculated is selected.
+For each chosen value of $\lambda$, the mean squared error of cross-validation, $MSE_v$, is calculated.
+The value of $\lambda$ that minimizes $MSE_v$ among all calculated is selected.
 However, ordinary cross-validation, which involves fitting the model $n$ times, can be computationally costly. Therefore, **generalized cross-validation** emerges as a computationally efficient alternative, effectively selecting the value of $\lambda$ that optimizes the balance between fit and smoothness.
 
 **Generalized cross validation** is expressed by the formula:
 \begin{equation*}
-V_g = \frac{n \sum_{i=1}^n (y_i - \hat{f}_i)^2}{[\operatorname{tr}(I - A)]^2},
+MSE_g = \frac{n \sum_{i=1}^n (y_i - \hat{f}_i)^2}{[\operatorname{tr}(I - \mathbf{A})]^2},
 \end{equation*}
-where $A$ is the influence matrix of the model, $A = \mathbf{X}(\mathbf{X}^T\mathbf{X}+\lambda S)^{-1}\mathbf{X}$. This matrix allows evaluating how each data point influences the prediction, adjusting the error.
+where $A$ is the influence matrix of the model, $\mathbf{A} = \mathbf{X}(\mathbf{X}^T\mathbf{X}+\lambda \mathbf{S})^{-1}\mathbf{X}$. This matrix allows evaluating how each data point influences the prediction, adjusting the error.
 
-This approach provides an efficient tool for selecting the parameter $\lambda$, thus balancing the accuracy and smoothness of the model. By minimizing $V_g$, a $\lambda$ that optimizes the model's fit to the data without overfitting is chosen, making generalized cross-validation especially valuable in scenarios where quick and precise model fitting is essential.
+This approach provides an efficient tool for selecting the parameter $\lambda$, thus balancing the accuracy and smoothness of the model. By minimizing $MSE_g$, a $\lambda$ that optimizes the model's fit to the data without overfitting is chosen, making generalized cross-validation especially valuable in scenarios where quick and precise model fitting is essential.
 
 
 # Simulating data
@@ -112,7 +113,7 @@ ggplot(data = data) +
        color = NULL) +
   theme_light() +
   theme(plot.title = element_text(size = 14),
-        legend.position = c(0.15, 0.85),  
+        legend.position.inside = c(0.15, 0.85),  
         legend.background = element_rect(fill = "white",colour = "black")) 
 ```
 
@@ -177,7 +178,7 @@ ggplot(data_spline, aes(x = x)) +
   labs(title = "Smoothing Splines", x = "x", y = "y", colour=NULL) +
   theme_light() +
   theme(plot.title = element_text(size = 14),
-        legend.position = c(0.15, 0.85),  
+        legend.position.inside = c(0.15, 0.85),  
         legend.background = element_rect(fill = "white", colour = "black"))
 # ggsave("../graphs/SmoothingSpline1.pdf", width = 10, height = 6, dpi = 300)
 ```
@@ -213,21 +214,21 @@ ggplot(data_spline, aes(x = x)) +
   geom_line(aes(x = x.pred, y = y.pred1, color = "1"), linewidth = 1) +
   geom_line(aes(x = x.pred, y = y.pred2, color = "2"), linewidth = 1) +
   geom_line(aes(x = x.pred, y = y.pred3, color = "3"), linewidth = 1) +
-  geom_point(aes(x = x, y = y.obs, color = "Observaciones"), shape = 20, size = 2) +
+  geom_point(aes(x = x, y = y.obs, color = "Observations"), shape = 20, size = 2) +
   scale_color_manual(
-    values = c("Observaciones" = "steelblue", 
+    values = c("Observations" = "steelblue", 
                "1" = "coral", 
                "2"="mediumorchid2",
                "3"="palegreen3"),
     labels = c(expression(lambda == 10^-10),
                expression(lambda == 10^-5),
                expression(lambda == 10^-2),
-               "Observaciones")
+               "Observations")
   ) +
-  labs(title = "Ajuste con Splines Penalizados", x = "x", y = "y", colour=NULL) +
+  labs(title = "Smoothing Splines", x = "x", y = "y", colour=NULL) +
   theme_light() +
   theme(plot.title = element_text(size = 14),
-        legend.position = c(0.15, 0.75),  
+        legend.position.inside = c(0.15, 0.75),  
         legend.background = element_rect(fill = "white", colour = "black"))
 # ggsave("../graphs/SmoothingSpline2.pdf", width = 10, height = 6, dpi = 300)
 ```

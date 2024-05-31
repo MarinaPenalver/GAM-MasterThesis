@@ -1,13 +1,14 @@
 
 ---
 title: "Linear Regression"
+author: "Marina Peñalver Ripoll"
 output:
-  pdf_document:
-    toc: yes
   html_document:
     toc: yes
     code_folding: show
     theme: yeti
+  pdf_document:
+    toc: yes
 ---
 
 ```{r setup, include=FALSE}
