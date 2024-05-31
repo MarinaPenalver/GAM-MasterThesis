@@ -19,10 +19,9 @@ set.seed(2512)
 
 # Introduction
 
-Generalized Linear Models (GLM) offer a powerful and flexible statistical methodology that generalizes traditional linear models to accommodate various types of data and distributions. These models are essential for understanding complex relationships in data where the response distribution does not necessarily follow normality.
+**Generalized Linear Models** (GLM) offer a powerful and flexible statistical methodology that generalizes traditional linear models to accommodate various types of data and distributions. These models are essential for understanding complex relationships in data where the response distribution does not necessarily follow normality.
 
-GLMs are applied using distributions from the exponential family, leveraging their beneficial mathematical properties, such as simplification in the calculation of expectation and variance. Below is the definition of this family of distributions.
-
+GLMs are applied using distributions from the exponential family, leveraging their beneficial mathematical properties, such as simplification in the calculation of expectation and variance. 
 
 A univariate random variable $Y$, which depends on a single parameter $\theta$, belongs to the \textit{exponential family} if its density function can be expressed as
 \begin{equation*}
