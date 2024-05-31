@@ -3,12 +3,12 @@
 title: "Linear Regression"
 author: "Marina Peñalver Ripoll"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     toc: yes
     code_folding: show
     theme: yeti
-  pdf_document:
-    toc: yes
 ---
 
 ```{r setup, include=FALSE}
@@ -72,9 +72,11 @@ library(gridExtra)
 ```{r data-visualization, fig.align='center'}
 data <- data.frame(x, y.obs, y.true)
 ggplot(data = data) +
-  geom_point(aes(x = x, y = y.obs, color = "Observations"), shape = 20, size = 2) +
+  geom_point(aes(x = x, y = y.obs, color = "Observations"), shape = 20, 
+             size = 2) +
   geom_line(aes(x = x, y = y.true, color = "True Function"), linewidth = 1) +
-  scale_color_manual(values = c("Observations" = "steelblue", "True Function" = "coral")) +
+  scale_color_manual(values = c("Observations" = "steelblue", 
+                                "True Function" = "coral")) +
   labs(title = "Simulated Data for Linear Regression",
        x = "x",
        y = "y",
@@ -90,7 +92,9 @@ Additionally, we visualize the distribution of the simulated errors.
 ```{r error-distribution, fig.align='center'}
 ggplot(data = data.frame(eps), aes(x = eps)) +
   geom_histogram(bins = 30, color = 'steelblue', fill = "cadetblue3") +
-  labs(title = "Distribution of Simulated Errors", x = "Errors", y = "Frequency") +
+  labs(title = "Distribution of Simulated Errors", 
+       x = "Errors", 
+       y = "Frequency") +
   theme_light()
 ```
 
@@ -112,7 +116,8 @@ We visualize the fitted model along with the observed data and the true function
 ```{r model-visualization, fig.align='center'}
 data.model <- data.frame(x, y.obs, y.true, x.pred, y.pred)
 ggplot(data = data.model) +
-  geom_point(aes(x = x, y = y.obs, color = "Observations"), shape = 20, size = 2) +
+  geom_point(aes(x = x, y = y.obs, color = "Observations"), 
+             shape = 20, size = 2) +
   geom_line(aes(x = x, y = y.true, color = "True Function"), linewidth = 1) +
   geom_path(aes(x = x.pred, y = y.pred, color = "Prediction"), linewidth = 1) +
   scale_color_manual(values = c("Observations" = "steelblue", 
@@ -137,7 +142,8 @@ residuals <- resid(model)
 # Residuals plot
 plot1 <- ggplot(data, aes(x = fitted(model), y = residuals)) +
   geom_point(color = "steelblue") + 
-  geom_hline(yintercept = 0, linetype = "dashed", color = "coral2", linewidth=1) +
+  geom_hline(yintercept = 0, linetype = "dashed", color = "coral2", 
+             linewidth=1) +
   labs(title = "Residuals",
        x = "Fitted values",
        y = "Residuals",

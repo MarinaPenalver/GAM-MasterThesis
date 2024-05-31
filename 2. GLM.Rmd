@@ -3,12 +3,12 @@
 title: "Generalized Linear Model"
 author: "Marina Peñalver Ripoll"
 output:
+  pdf_document:
+    toc: yes
   html_document:
     toc: yes
     code_folding: show
     theme: yeti
-  pdf_document:
-    toc: yes
 ---
 
 
@@ -101,7 +101,8 @@ plot1 <- ggplot(data, aes(x = factor(y), y = x, fill = factor(y))) +
 plot0 <- ggplot(data = data) +
   geom_line(aes(x = x, y = prob), color = "coral", linewidth = 1) +
   geom_jitter(aes(x = x, y = y), 
-              position = position_jitter(height = 0.1), shape = 20, size = 2, color = "steelblue") +
+              position = position_jitter(height = 0.1), shape = 20, size = 2, 
+              color = "steelblue") +
   labs(title = "Simulated Data for Logistic Regression",
        x = "x",
        y = "P(Y = 1)",
@@ -141,13 +142,16 @@ mat.confusion <- function(predictions, actual_values, main = NULL) {
   sensitivity <- cm$byClass["Sensitivity"]
   specificity <- cm$byClass["Specificity"]
   
-  fourfoldplot(cm$table, color = c("coral2", "cadetblue3"), conf.level = 0, main = main)
-  return(list(accuracy = accuracy, sensitivity = sensitivity, specificity = specificity))
+  fourfoldplot(cm$table, color = c("coral2", "cadetblue3"), conf.level = 0, 
+               main = main)
+  return(list(accuracy = accuracy, sensitivity = sensitivity, 
+              specificity = specificity))
 }
 
 predictions <- factor(y.pred2, levels = c(0, 1))
 actual_values <- factor(y, levels = c(0, 1))
-mat.confusion(predictions = predictions, actual_values = actual_values, main = 'Confusion Matrix')
+mat.confusion(predictions = predictions, actual_values = actual_values, 
+              main = 'Confusion Matrix')
 ```
 
 
