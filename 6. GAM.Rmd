@@ -83,6 +83,7 @@ The `anova()` function is designed to facilitate the analysis of variance for fi
 This function is primarily used to compare the fit of GAM models that differ in their terms, to determine if the inclusion of additional terms in the model significantly improves the fit. Additionally, it can be used to test the significance of specific terms within a model, providing a rigorous method for feature selection.
 
 The key parameters are:
+
 - **`object`**: A GAM model or a list of GAM models to be compared.
 - **`test = c("Chisq", "F", "Cp")`**: Specifies the type of statistical test to use for the comparison.
 
@@ -97,6 +98,5 @@ The function performs a series of tests and diagnostic plots that help assess th
 4. **Scatter Plot of Predicted vs. Observed Responses**: Helps assess linearity and the overall fit of the model.
 
 Additionally, it performs tests for each smoothed term in the model to determine if the level of smoothing is appropriate. This includes checking if the number of degrees of freedom is sufficient to capture the underlying relationship without overfitting.
-```
 
-You can include this content in your R Markdown document to provide a comprehensive guide on using GAMs with `gam()`, `anova()`, and `gam.check()`.
+

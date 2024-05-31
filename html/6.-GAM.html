@@ -566,7 +566,11 @@ REML (Restricted Maximum Likelihood) or NCV (Non-Negative
 Cross-Validation). Alternatively, splines with fixed degrees of freedom
 can be used.</p>
 <p>The usage of the <code>gam()</code> function is as follows:</p>
-<pre class="r"><code>gam(formula, family=gaussian(), data=list(), weights=NULL, subset=NULL, na.action, offset=NULL, method=&quot;GCV.Cp&quot;, optimizer=c(&quot;outer&quot;, &quot;newton&quot;), control=list(), scale=0, select=FALSE, knots=NULL, sp=NULL, min.sp=NULL, H=NULL, gamma=1, fit=TRUE, paraPen=NULL, G=NULL, in.out, drop.unused.levels=TRUE, drop.intercept=NULL, nei=NULL, discrete=FALSE, ...)</code></pre>
+<pre class="r"><code>gam(formula, family=gaussian(), data=list(), weights=NULL, subset=NULL, 
+na.action, offset=NULL, method=&quot;GCV.Cp&quot;, optimizer=c(&quot;outer&quot;, &quot;newton&quot;), 
+control=list(), scale=0, select=FALSE, knots=NULL, sp=NULL, min.sp=NULL, 
+H=NULL, gamma=1, fit=TRUE, paraPen=NULL, G=NULL, in.out, 
+drop.unused.levels=TRUE, drop.intercept=NULL, nei=NULL, discrete=FALSE, ...)</code></pre>
 <p>The key parameters are:</p>
 <ul>
 <li><strong><code>formula</code></strong>: Defines the structure of the
@@ -599,10 +603,13 @@ differ in their terms, to determine if the inclusion of additional terms
 in the model significantly improves the fit. Additionally, it can be
 used to test the significance of specific terms within a model,
 providing a rigorous method for feature selection.</p>
-<p>The key parameters are: - <strong><code>object</code></strong>: A GAM
-model or a list of GAM models to be compared. -
-<strong><code>test = c(&quot;Chisq&quot;, &quot;F&quot;, &quot;Cp&quot;)</code></strong>: Specifies
-the type of statistical test to use for the comparison.</p>
+<p>The key parameters are:</p>
+<ul>
+<li><strong><code>object</code></strong>: A GAM model or a list of GAM
+models to be compared.</li>
+<li><strong><code>test = c(&quot;Chisq&quot;, &quot;F&quot;, &quot;Cp&quot;)</code></strong>:
+Specifies the type of statistical test to use for the comparison.</li>
+</ul>
 </div>
 <div id="gam.check" class="section level3">
 <h3><code>gam.check()</code></h3>
@@ -629,10 +636,7 @@ Helps assess linearity and the overall fit of the model.</li>
 <p>Additionally, it performs tests for each smoothed term in the model
 to determine if the level of smoothing is appropriate. This includes
 checking if the number of degrees of freedom is sufficient to capture
-the underlying relationship without overfitting. ```</p>
-<p>You can include this content in your R Markdown document to provide a
-comprehensive guide on using GAMs with <code>gam()</code>,
-<code>anova()</code>, and <code>gam.check()</code>.</p>
+the underlying relationship without overfitting.</p>
 </div>
 </div>
 
