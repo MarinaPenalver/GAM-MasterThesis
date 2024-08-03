@@ -1,4 +1,4 @@
-# Modelos Lineal Generalizados
+# Modelos Lineales Generalizados
 
 ## Resumen
 Las técnicas de predicción más utilizadas hoy en día se basan en modelos lineales (LM), que son sencillas de aplicar y de interpretar. Sin embargo, pueden tener limitaciones significativas en términos de poder predictivo debido a que el supuesto de linealidad es casi siempre una aproximación y, a veces, una aproximación deficiente.
